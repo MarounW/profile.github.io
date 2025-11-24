@@ -1,91 +1,130 @@
 <!DOCTYPE html>
-color: #0a1a33;
-}
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio</title>
+  <style>
+    /* --- Global Styles --- */
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
+      scroll-behavior: smooth;
+    }
 
+    section {
+      padding: 80px 10%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-/* --- Experience Section --- */
-#experience {
-background: linear-gradient(135deg, #0f2a5a, #0a1a33);
-}
+    /* --- Hero Section --- */
+    #hero {
+      background: linear-gradient(135deg, #0a1a33, #0f2a5a);
+      color: white;
+      text-align: center;
+    }
 
+    #hero h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
 
-/* --- Projects Section --- */
-#projects {
-background: #ffffff;
-color: #0a1a33;
-}
+    #hero p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
 
+    /* --- Education Section --- */
+    #education {
+      background: #f5f7fa;
+      color: #0a1a33;
+    }
 
-.project {
-padding: 20px;
-margin: 20px 0;
-border-left: 4px solid #0f2a5a;
-}
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      color: #0a1a33;
+    }
 
+    /* --- Experience Section --- */
+    #experience {
+      background: linear-gradient(135deg, #0f2a5a, #0a1a33);
+    }
 
-/* --- Contact Section --- */
-#contact {
-background: #0a1a33;
-text-align: center;
-}
+    /* --- Projects Section --- */
+    #projects {
+      background: #ffffff;
+      color: #0a1a33;
+    }
 
+    .project {
+      padding: 20px;
+      margin: 20px 0;
+      border-left: 4px solid #0f2a5a;
+    }
 
-#contact a {
-color: #4da3ff;
-text-decoration: none;
-font-size: 1.2rem;
-}
+    /* --- Contact Section --- */
+    #contact {
+      background: #0a1a33;
+      text-align: center;
+    }
 
+    #contact a {
+      color: #4da3ff;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
 
-</style>
+  </style>
 </head>
 <body>
 
+  <!-- Hero Section -->
+  <section id="hero">
+    <h1>Your Name</h1>
+    <p>Short description about who you are and what you do.</p>
+  </section>
 
-<!-- Hero Section -->
-<section id="hero">
-<h1>Your Name</h1>
-<p>Short description about who you are and what you do.</p>
-</section>
+  <!-- Education Section -->
+  <section id="education">
+    <h2>Education</h2>
+    <div class="card">
+      <h3>University Name</h3>
+      <p>Bachelor / Master in Something</p>
+      <p>Year – Year</p>
+    </div>
+  </section>
 
+  <!-- Experience Section -->
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="card" style="background: rgba(255,255,255,0.1); color: white;">
+      <h3>Job Title – Company</h3>
+      <p>Description of what you did.</p>
+    </div>
+  </section>
 
-<!-- Education Section -->
-<section id="education">
-<h2>Education</h2>
-<div class="card">
-<h3>University Name</h3>
-<p>Bachelor / Master in Something</p>
-<p>Year – Year</p>
-</div>
-</section>
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project">
+      <h3>Project Name</h3>
+      <p>Short description of the project.</p>
+    </div>
+  </section>
 
-
-<!-- Experience Section -->
-<section id="experience">
-<h2>Experience</h2>
-<div class="card" style="background: rgba(255,255,255,0.1); color: white;">
-<h3>Job Title – Company</h3>
-<p>Description of what you did.</p>
-</div>
-</section>
-
-
-<!-- Projects Section -->
-<section id="projects">
-<h2>Projects</h2>
-<div class="project">
-<h3>Project Name</h3>
-<p>Short description of the project.</p>
-</div>
-</section>
-
-
-<!-- Contact Section -->
-<section id="contact">
-<h2>Contact</h2>
-<p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
-</section>
-
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
+  </section>
 
 </body>
 </html>
