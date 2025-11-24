@@ -10,6 +10,7 @@
       font-family: Arial, Helvetica, sans-serif;
       color: white;
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     section {
@@ -18,46 +19,88 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .visible-section {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Section backgrounds */
     #hero { background: linear-gradient(135deg, #0a1a33, #0f2a5a); color: white; text-align: center; }
     #education { background: #f5f7fa; color: #0a1a33; }
-    #experience { background: linear-gradient(135deg, #0f2a5a, #0a1a33); }
+    #experience { background: linear-gradient(135deg, #0f2a5a, #0a1a33); color: white; }
     #projects { background: #ffffff; color: #0a1a33; }
-    #contact { background: #0a1a33; text-align: center; }
+    #contact { background: #0a1a33; color: white; text-align: center; }
 
-    .card { background: white; padding: 20px; margin: 20px 0; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: #0a1a33; }
-    .project { padding: 20px; margin: 20px 0; border-left: 4px solid #0f2a5a; }
-    .project-img { width: 300px; border-radius: 12px; opacity: 0; transform: translateX(80px); transition: opacity 1s ease, transform 1s ease; }
-    .project-img.visible { opacity: 1; transform: translateX(0); }
+    /* Smooth cards */
+    .card {
+      background: white;
+      padding: 25px;
+      margin: 20px 0;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      color: #0a1a33;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
 
-    /* Navbar bar behind buttons with no color */
-    #navbar {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 15px 10%; display: flex; justify-content: flex-start; gap: 15px; z-index: 1000;
-      background: transparent;
+    .card.visible-card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Project images */
+    .project-img {
+      width: 300px;
       border-radius: 12px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .project-img.visible-img {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Navbar */
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 25px;
+      display: flex;
+      gap: 20px;
+      z-index: 1000;
+      background: transparent;
       backdrop-filter: blur(10px);
+      border-radius: 14px;
     }
 
     #navbar a {
-      position: relative;
       padding: 6px 12px;
       border-radius: 10px;
       text-decoration: none;
       font-size: 1rem;
-      transition: border 0.3s, color 0.3s;
+      color: white;
       border: 2px solid transparent;
+      transition: border 0.3s ease, color 0.3s ease;
     }
 
-    /* Hover effect: show border as 3D shadow effect */
     #navbar a:hover {
       border-color: currentColor;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.25);
     }
   </style>
 </head>
 <body>
+
   <nav id="navbar">
     <a href="#hero" class="nav-link">Home</a>
     <a href="#education" class="nav-link">Education</a>
@@ -82,7 +125,7 @@
 
   <section id="experience">
     <h2>Experience</h2>
-    <div class="card" style="background: rgba(255,255,255,0.1); color: white;">
+    <div class="card" style="background: rgba(255,255,255,0.12); color: white;">
       <h3>Job Title – Company</h3>
       <p>Description of what you did.</p>
     </div>
@@ -92,13 +135,14 @@
     <h2>Projects</h2>
     <div class="project">
       <h3>PCB Design</h3>
-      <p>Some PCB work to show</p>
-      <img src="microscope.jpg" class="project-img" id="img1">
+      <p>PCB Work</p>
+      <img src="microscope.jpg" class="project-img">
     </div>
+
     <div class="project">
       <h3>Custom PCB Design</h3>
       <p>A PCB that I designed and assembled as part of a hardware project.</p>
-      <img src="pcb.jpg" class="project-img" id="img2">
+      <img src="pcb.jpg" class="project-img">
     </div>
   </section>
 
@@ -107,49 +151,69 @@
     <p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
   </section>
 
-  <script>
-    const links = document.querySelectorAll('.nav-link');
-    links.forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href').substring(1);
-        const targetSection = document.getElementById(targetId);
-        targetSection.scrollIntoView({ behavior: 'smooth' });
+<script>
+// Smooth scrolling override
+const links = document.querySelectorAll('.nav-link');
+links.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Section fade-in / fade-out
+const sections = document.querySelectorAll('section');
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible-section');
+    } else {
+      entry.target.classList.remove('visible-section');
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(sec => sectionObserver.observe(sec));
+
+// Card fade-in
+const cards = document.querySelectorAll('.card');
+const cardObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) entry.target.classList.add('visible-card');
+    else entry.target.classList.remove('visible-card');
+  });
+}, { threshold: 0.3 });
+
+cards.forEach(card => cardObserver.observe(card));
+
+// Images fade-in
+const images = document.querySelectorAll('.project-img');
+const imageObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) entry.target.classList.add('visible-img');
+    else entry.target.classList.remove('visible-img');
+  });
+}, { threshold: 0.3 });
+
+images.forEach(img => imageObserver.observe(img));
+// Dynamic navbar color inversion based on section background
+const navLinks = document.querySelectorAll('#navbar a');
+const bgObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const bg = window.getComputedStyle(entry.target).backgroundColor;
+      const light = bg.includes('245, 247, 250') || bg.includes('255, 255, 255');
+      navLinks.forEach(link => {
+        link.style.color = light ? '#0a1a33' : 'white';
       });
-    });
+    }
+  });
+}, { threshold: 0.55 });
 
-    // Reveal project images
-    const images = document.querySelectorAll('.project-img');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.2 });
-    images.forEach(img => observer.observe(img));
+sections.forEach(sec => bgObserver.observe(sec));
 
-    // Dynamic navbar button colors based on section background
-    const sections = document.querySelectorAll('section');
-    const navBtns = document.querySelectorAll('.nav-link');
+</script>
 
-    const sectionObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          const bgColor = window.getComputedStyle(entry.target).backgroundColor;
-          const isLight = bgColor === 'rgb(245, 247, 250)' || bgColor === 'rgb(255, 255, 255)';
-          navBtns.forEach(btn => {
-            if(isLight){
-              btn.style.color = '#0a1a33';
-            } else {
-              btn.style.color = 'white';
-            }
-          });
-        }
-      });
-    }, { threshold: 0.6 });
-
-    sections.forEach(sec => sectionObserver.observe(sec));
-  </script>
 </body>
-</html> 
+</html>
